@@ -2,7 +2,7 @@ package main
 
 import (
 	"advancedGo/configs"
-	"advancedGo/internal/auth"
+	"advancedGo/internal/verify"
 	"fmt"
 	"net/http"
 )
@@ -11,7 +11,7 @@ func main() {
 	config := configs.LoadConfig()
 
 	router := http.NewServeMux()
-	auth.NewHandler(router, auth.AuthHandlerDeps{
+	verify.NewHandler(router, verify.VerifyHandlerDeps{
 		Config: config,
 	})
 
