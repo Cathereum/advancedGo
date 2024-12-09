@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:16.4
+    container_name: shop_cart_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pg_pass
+      PGDATA: /data/postgres
+    volumes:
+      - ./postgres-data:/data/postgres
+    ports:
+      - '5434:5432'
