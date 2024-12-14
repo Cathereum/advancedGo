@@ -25,7 +25,7 @@ func NewHandler(router *http.ServeMux, deps ProductHandlerDeps) {
 	}
 
 	router.HandleFunc("GET /product/{id}", handler.GetByID())
-	router.HandleFunc("GET /product/", handler.GetAll())
+	router.HandleFunc("GET /product", handler.GetAll())
 	router.HandleFunc("POST /product", handler.Create())
 	router.HandleFunc("PATCH /product/{id}", handler.Update())
 	router.HandleFunc("DELETE /product/{id}", handler.Delete())
