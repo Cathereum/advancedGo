@@ -2,8 +2,10 @@ package main
 
 import (
 	"advancedGo/internal/product"
-	"log"
+	"advancedGo/internal/user"
 	"os"
+
+	"log"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -21,5 +23,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	database.AutoMigrate(&product.Product{})
+
+	database.AutoMigrate(&product.Product{}, &user.User{})
 }

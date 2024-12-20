@@ -2,7 +2,9 @@ package main
 
 import (
 	"advancedGo/configs"
+	"advancedGo/internal/auth"
 	"advancedGo/internal/product"
+	"advancedGo/internal/user"
 	"advancedGo/pkg/db"
 	"advancedGo/pkg/middleware"
 	"fmt"
@@ -19,15 +21,24 @@ func main() {
 		PrettyPrint:     true,
 	})
 
-	c := configs.LoadConfig()
-	db := db.New(c)
+	config := configs.LoadConfig()
+	db := db.New(config)
 
 	router := http.NewServeMux()
 
 	// Repository
 	productRepository := product.NewProductRepository(db)
+	userRepository := user.NewUserRepository(db)
+
+	// Services
+	authService := auth.NewAuthService(userRepository)
 
 	// Handler
+	auth.NewHandler(router, auth.AuthHandlerDeps{
+		Config:      config,
+		AuthService: authService,
+	})
+
 	product.NewHandler(router, product.ProductHandlerDeps{
 		ProductRepository: productRepository,
 	})
