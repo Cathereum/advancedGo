@@ -1,11 +1,16 @@
 package user
 
-import "gorm.io/gorm"
+import (
+	"advancedGo/internal/order"
+
+	"gorm.io/gorm"
+)
 
 type User struct {
 	gorm.Model
-	Phone            string `gorm:"index"`
-	SessionId        string
-	VerificationCode string
-	IsVerified       bool
+	Phone            string        `gorm:"index"`
+	SessionId        string        `json:"session_id"`
+	VerificationCode string        `json:"verification_code"`
+	IsVerified       bool          `json:"is_verified"`
+	Orders           []order.Order `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }

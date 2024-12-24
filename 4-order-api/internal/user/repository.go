@@ -31,6 +31,14 @@ func (repo *UserRepository) FindByPhone(phone string) (*User, error) {
 	return &user, nil
 }
 
+func (repo *UserRepository) GetUserId(phone string) (uint, error) {
+	user, err := repo.FindByPhone(phone)
+	if err != nil {
+		return 0, err
+	}
+	return user.ID, nil
+}
+
 func (repo *UserRepository) Update(user *User) error {
 	result := repo.Database.DB.Model(user).Updates(map[string]interface{}{
 		"session_id":        user.SessionId,

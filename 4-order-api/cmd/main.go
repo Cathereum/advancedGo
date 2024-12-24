@@ -3,6 +3,7 @@ package main
 import (
 	"advancedGo/configs"
 	"advancedGo/internal/auth"
+	"advancedGo/internal/order"
 	"advancedGo/internal/product"
 	"advancedGo/internal/user"
 	"advancedGo/pkg/db"
@@ -29,6 +30,7 @@ func main() {
 	// Repository
 	productRepository := product.NewProductRepository(db)
 	userRepository := user.NewUserRepository(db)
+	orderRepository := order.NewOrderRepository(db)
 
 	// Services
 	authService := auth.NewAuthService(userRepository)
@@ -41,6 +43,12 @@ func main() {
 
 	product.NewHandler(router, product.ProductHandlerDeps{
 		ProductRepository: productRepository,
+	})
+	order.NewHandler(router, order.OrderHandlerDeps{
+		Config:             config,
+		OrderRepository:    orderRepository,
+		IProductRepository: productRepository,
+		IUserRepository:    userRepository,
 	})
 
 	// Middlewares

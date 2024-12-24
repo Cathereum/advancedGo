@@ -1,6 +1,7 @@
 package main
 
 import (
+	"advancedGo/internal/order"
 	"advancedGo/internal/product"
 	"advancedGo/internal/user"
 	"os"
@@ -24,5 +25,5 @@ func main() {
 		panic(err)
 	}
 
-	database.AutoMigrate(&product.Product{}, &user.User{})
+	database.AutoMigrate(&product.Product{}, &user.User{}, &order.Order{})
 }
