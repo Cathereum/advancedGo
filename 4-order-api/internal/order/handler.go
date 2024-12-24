@@ -36,7 +36,7 @@ func NewHandler(router *http.ServeMux, deps OrderHandlerDeps) {
 	}
 
 	router.Handle("GET /order/{id}", middleware.IsAuth(handler.GetByID(), deps.Config))
-	router.Handle("GET /order", middleware.IsAuth(handler.GetAll(), deps.Config))
+	router.Handle("GET /my-orders", middleware.IsAuth(handler.GetAll(), deps.Config))
 	router.Handle("POST /order", middleware.IsAuth(handler.Create(), deps.Config))
 
 }
