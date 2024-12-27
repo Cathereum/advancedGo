@@ -8,15 +8,15 @@ import (
 )
 
 type Config struct {
-	DB   dbConfig
-	Auth authConfig
+	DB   DBConfig
+	Auth AuthConfig
 }
 
-type dbConfig struct {
+type DBConfig struct {
 	DSN string
 }
 
-type authConfig struct {
+type AuthConfig struct {
 	Token string
 }
 
@@ -27,10 +27,10 @@ func LoadConfig() *Config {
 	}
 
 	return &Config{
-		DB: dbConfig{
+		DB: DBConfig{
 			DSN: os.Getenv("DSN"),
 		},
-		Auth: authConfig{
+		Auth: AuthConfig{
 			Token: os.Getenv("TOKEN"),
 		},
 	}

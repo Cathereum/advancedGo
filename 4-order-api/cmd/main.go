@@ -14,15 +14,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func main() {
-
-	// Logrus
-	logrus.SetFormatter(&logrus.JSONFormatter{
-		TimestampFormat: "2006-01-02 15:04:05",
-		PrettyPrint:     true,
-	})
-
-	config := configs.LoadConfig()
+func App(config *configs.Config) http.Handler {
 	db := db.New(config)
 
 	router := http.NewServeMux()
@@ -56,9 +48,23 @@ func main() {
 		middleware.Logging,
 	)
 
+	return middlewaresChain(router)
+
+}
+
+func main() {
+
+	// Logrus
+	logrus.SetFormatter(&logrus.JSONFormatter{
+		TimestampFormat: "2006-01-02 15:04:05",
+		PrettyPrint:     true,
+	})
+
+	config := configs.LoadConfig()
+
 	server := http.Server{
 		Addr:    ":8081",
-		Handler: middlewaresChain(router),
+		Handler: App(config),
 	}
 
 	fmt.Println("Start listening on port 8081")
